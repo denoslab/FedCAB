@@ -16,22 +16,20 @@ Non-iid data can be generated with each device holding samples of only two class
 To start an example FL training, simply run this command:
 
 ```shell
-python main.py --result_dir results_mnist_logit_p1 --dataset mnist_all.pkl --algo fedavg --num_user 100 --participation_level 1 --participation_pattern adversarial --clients_per_round 10 --model logistic
+python main.py --result_dir results_mnist_logit_p1 --dataset mnist_all.pkl --algo fedavg --num_user 100 --participation_level 1 --participation_pattern adversarial --clients_per_round 10 --model logistic --num_round 250 --local_step 1 --batch_size 100 --lr 0.01 --wd 0.001
 ```
 
 You can modify the shell script to change the experiment setup. The meaning of each variable is listed as follows: 
 
-- \$NUM_USER: the total number of devices
-- \$S is the number of participating devices each round for FedAvg with device sampling.  
-- \$T: the total number of communication rounds
-- \$K: the number of local epochs
-- \$B: batch size
-- \$device: GPU id
-- \$SEED: random seed
-- \$NET: the model, should be set as "logistic" or "cnn"
-- \$WD: weight decay
-- \$ALGO: the algorithm should be set to fedavg as we implemented all of FedCAB algorithm in fedavg.py
-- \$RESULT_DIR: the directory for experiment logs
+- num_user: the total number of clients
+- clients_per_round: is the number of participating devices each round for FedAvg with device sampling.  
+- num_round: the total number of communication rounds
+- local_step: the number of local epochs
+- device: GPU id
+- model: the model, should be set as "logistic" or "cnn"
+- wd: weight decay
+- algo: the algorithm should be set to fedavg as we implemented all of FedCAB algorithm in fedavg.py
+- result_dir: the directory for experiment logs
 
 During training, the logs will be saved under the directory specified by the user. For each run, the folder is named as the hash of the starting time. Each folder contains two files, i.e. ```options.json``` and ```log.json```. The former records the experiment setup and the latter records the training loss, training accuracy, test loss and test accuracy.
 
